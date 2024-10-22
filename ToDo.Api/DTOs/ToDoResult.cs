@@ -2,16 +2,16 @@
 
 namespace ToDo.Api.DTOs
 {
-    public class ToDoDto : ToDoForCreateDto
+    public class ToDoResult : CreateTodoRequest
     {
         public int Id { get; set; }
 
-        public ToDoDto()
+        public ToDoResult()
         {
 
         }
 
-        public ToDoDto(ToDoItem item) : base(item)
+        public ToDoResult(ToDoItem item) : base(item)
         {
             Id = item.Id;
         }

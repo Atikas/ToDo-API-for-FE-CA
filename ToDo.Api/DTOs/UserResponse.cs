@@ -2,7 +2,7 @@
 
 namespace ToDo.Api.DTOs
 {
-    public class UserResponse : UserForRegistration
+    public class UserResponse : RegisterUserRequest
     {
         public string? Id { get; set; }
 

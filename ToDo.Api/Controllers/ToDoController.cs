@@ -25,7 +25,7 @@ namespace ToDo.Api.Controllers
         /// <returns></returns>
         [HttpGet]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(IEnumerable<ToDoDto>), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(IEnumerable<ToDoResult>), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetToDos()
         {
@@ -33,7 +33,7 @@ namespace ToDo.Api.Controllers
             {
                 return NotFound(new ErrorResponse("No to do items found"));
             }
-            var result = await _context.ToDos.Select(t=> new ToDoDto(t)).ToListAsync();
+            var result = await _context.ToDos.Select(t=> new ToDoResult(t)).ToListAsync();
             return Ok(result);
         }
 
@@ -44,7 +44,7 @@ namespace ToDo.Api.Controllers
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(ToDoDto), StatusCodes.Status200OK)]
+        [ProducesResponseType(typeof(ToDoResult), StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetToDoItem(int id)
         {
@@ -53,7 +53,7 @@ namespace ToDo.Api.Controllers
             
             var toDoItem = await _context.ToDos.FindAsync(id);
 
-            return toDoItem == null ? NotFound(new ErrorResponse($"No to do items found by id {id}")) : Ok(new ToDoDto(toDoItem));
+            return toDoItem == null ? NotFound(new ErrorResponse($"No to do items found by id {id}")) : Ok(new ToDoResult(toDoItem));
 
           
         }
@@ -62,7 +62,7 @@ namespace ToDo.Api.Controllers
         /// UPDATE existing todo item by id
         /// </summary>
         /// <param name="id"></param>
-        /// <param name="toDoItem"></param>
+        /// <param name="req"></param>
         /// <returns></returns>
         [HttpPut("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
@@ -70,12 +70,16 @@ namespace ToDo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status204NoContent)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PutToDoItem(int id, ToDoDto toDoItem)
+        public async Task<IActionResult> PutToDoItem(int id, UpdateTodoRequest req)
         {
-            if (id != toDoItem.Id)
-            {
+            if (id != req.Id)
                 return BadRequest(new ErrorResponse("Submitted to do item id doesn't match request id"));
-            }
+
+            if (await _context.Users.FindAsync(req.UserId) == null)
+                return BadRequest(new ErrorResponse($"No user found by id {req.UserId}"));
+
+            if (req.EndDate.HasValue && req.EndDate.Value < DateTime.Now)
+                return BadRequest(new ErrorResponse("End date can not be in past"));
 
             var item = await _context.ToDos.FirstOrDefaultAsync(t => t.Id == id);
 
@@ -84,10 +88,10 @@ namespace ToDo.Api.Controllers
                 return NotFound(new ErrorResponse($"No to do items found by id {id}"));
             }
 
-            item.UserId = toDoItem.UserId;
-            item.Type = toDoItem.Type;
-            item.EndDate = toDoItem.EndDate;
-            item.Content = toDoItem.Content;
+            item.UserId = req.UserId;
+            item.Type = req.Type;
+            item.EndDate = req.EndDate;
+            item.Content = req.Content;
 
             _context.Entry(item).State = EntityState.Modified;
 
@@ -113,30 +117,36 @@ namespace ToDo.Api.Controllers
         /// <summary>
         /// CREATE new todo item
         /// </summary>
-        /// <param name="toDoItem"></param>
+        /// <param name="req"></param>
         /// <returns></returns>
         [HttpPost]
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
-        [ProducesResponseType(typeof(ToDoDto),StatusCodes.Status201Created)]
+        [ProducesResponseType(typeof(ToDoResult),StatusCodes.Status201Created)]
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        public async Task<IActionResult> PostToDoItem(ToDoForCreateDto toDoItem)
+        public async Task<IActionResult> PostToDoItem(CreateTodoRequest req)
         {
             if (_context.ToDos == null)
                 return StatusCode(500, $"Server error - database issue");
 
+            if (await _context.Users.FindAsync(req.UserId) == null)
+                return BadRequest(new ErrorResponse($"No user found by id {req.UserId}"));
+
+            if (req.EndDate.HasValue && req.EndDate.Value < DateTime.Now)
+                return BadRequest(new ErrorResponse("End date can not be in past"));
+
             var toDoEntity = new ToDoItem()
             {
-                Content = toDoItem.Content,
-                EndDate = toDoItem.EndDate,
-                Type = toDoItem.Type,
-                UserId = toDoItem.UserId
+                Content = req.Content,
+                EndDate = req.EndDate,
+                Type = req.Type,
+                UserId = req.UserId
             };
             _context.ToDos.Add(toDoEntity);
             await _context.SaveChangesAsync();
 
-            var createdTodo = new ToDoDto(toDoEntity);
+            var createdTodo = new ToDoResult(toDoEntity);
 
             return CreatedAtAction("GetToDoItem", new { id = createdTodo.Id }, createdTodo);
         }

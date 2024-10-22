@@ -61,7 +61,7 @@ namespace ToDo.Api.Controllers
         [Produces(MediaTypeNames.Application.Json)]
         [Consumes(MediaTypeNames.Application.Json)]
         [ProducesResponseType(StatusCodes.Status200OK)]
-        public async Task<IActionResult> Register(UserForRegistration user)
+        public async Task<IActionResult> Register(RegisterUserRequest user)
         {
             if (await _userManager.FindByNameAsync(user.UserName) != null)
             {
