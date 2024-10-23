@@ -36,7 +36,7 @@ namespace ToDo.Api.Controllers
         /// <summary>
         /// GET single to-do item by id
         /// </summary>
-        /// <param name="id">id of single todo item</param>
+        /// <param name="id">id of single to-do item</param>
         /// <returns></returns>
         [HttpGet("{id}")]
         [Produces(MediaTypeNames.Application.Json)]
@@ -129,13 +129,8 @@ namespace ToDo.Api.Controllers
             if (req.EndDate.HasValue && req.EndDate.Value < DateTime.Now)
                 return BadRequest(new ErrorResponse("End date can not be in past"));
 
-            var toDoEntity = new ToDoItem()
-            {
-                Content = req.Content,
-                EndDate = req.EndDate,
-                Type = req.Type,
-                UserId = req.UserId
-            };
+           
+            var toDoEntity = (ToDoItem)req;
             _context.ToDos.Add(toDoEntity);
             await _context.SaveChangesAsync();
 
@@ -159,9 +154,7 @@ namespace ToDo.Api.Controllers
             
             var toDoItem = await _context.ToDos.FindAsync(id);
             if (toDoItem == null)
-            {
                 return NotFound(new ErrorResponse($"No to do items found by id {id}"));
-            }
 
             _context.ToDos.Remove(toDoItem);
             await _context.SaveChangesAsync();

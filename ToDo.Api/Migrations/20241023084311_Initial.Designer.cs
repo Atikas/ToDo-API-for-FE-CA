@@ -12,7 +12,7 @@ using ToDo.Api.Data;
 namespace ToDo.Api.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20241021144219_Initial")]
+    [Migration("20241023084311_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -236,6 +236,12 @@ namespace ToDo.Api.Migrations
 
                     b.Property<DateTime?>("EndDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<bool>("IsDone")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("Priority")
+                        .HasColumnType("int");
 
                     b.Property<string>("Type")
                         .IsRequired()
