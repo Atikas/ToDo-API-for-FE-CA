@@ -20,7 +20,7 @@ namespace ToDo.Api.Controllers
         }
 
         /// <summary>
-        /// GET all todo items
+        /// GET all to-do items
         /// </summary>
         /// <returns></returns>
         [HttpGet]
@@ -29,16 +29,12 @@ namespace ToDo.Api.Controllers
         [ProducesResponseType(StatusCodes.Status404NotFound)]
         public async Task<IActionResult> GetToDos()
         {
-            if (_context.ToDos == null)
-            {
-                return NotFound(new ErrorResponse("No to do items found"));
-            }
             var result = await _context.ToDos.Select(t=> new ToDoResult(t)).ToListAsync();
             return Ok(result);
         }
 
         /// <summary>
-        /// GET single todo item by id
+        /// GET single to-do item by id
         /// </summary>
         /// <param name="id">id of single todo item</param>
         /// <returns></returns>
@@ -52,14 +48,13 @@ namespace ToDo.Api.Controllers
                 return NotFound(new ErrorResponse("No to do items found"));
             
             var toDoItem = await _context.ToDos.FindAsync(id);
-
             return toDoItem == null ? NotFound(new ErrorResponse($"No to do items found by id {id}")) : Ok(new ToDoResult(toDoItem));
 
           
         }
 
         /// <summary>
-        /// UPDATE existing todo item by id
+        /// UPDATE existing to-do item by id
         /// </summary>
         /// <param name="id"></param>
         /// <param name="req"></param>
@@ -84,9 +79,7 @@ namespace ToDo.Api.Controllers
             var item = await _context.ToDos.FirstOrDefaultAsync(t => t.Id == id);
 
             if (item == null)
-            {
                 return NotFound(new ErrorResponse($"No to do items found by id {id}"));
-            }
 
             item.UserId = req.UserId;
             item.Type = req.Type;
@@ -103,7 +96,7 @@ namespace ToDo.Api.Controllers
             {
                 if (!ToDoItemExists(id))
                 {
-                    return NotFound(new ErrorResponse($"No to do items found by id {id}"));
+                    return NotFound(new ErrorResponse($"No to-do items found by id {id}"));
                 }
                 else
                 {
@@ -115,7 +108,7 @@ namespace ToDo.Api.Controllers
         }
 
         /// <summary>
-        /// CREATE new todo item
+        /// CREATE new to-do item
         /// </summary>
         /// <param name="req"></param>
         /// <returns></returns>
@@ -152,7 +145,7 @@ namespace ToDo.Api.Controllers
         }
 
         /// <summary>
-        /// DELETE todo item by id
+        /// DELETE to-do item by id
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
