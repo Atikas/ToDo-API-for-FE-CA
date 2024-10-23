@@ -4,7 +4,7 @@
 
 This project is a simple To-Do application that includes user registration, login functionality, and task management. The user will be able to register, log in, and manage their tasks. The project uses HTML, CSS, and JavaScript for the frontend, and communicates with the backend through an API.
 
-## Starting the Project
+## Starting the .NET Project (ensure you have .net6 runtime installed)
 
 To start the project, follow these steps:
 
@@ -62,6 +62,12 @@ To start the project, follow these steps:
 ### 7. File Structure
 - The main HTML, CSS, and JavaScript files should be stored together in the root.
 - Separate subfolders should be created for other pages, such as the registration and login forms, to maintain order.
+
+## Support
+
+If you found this project helpful and would like to support my work, consider buying me a coffee! Your support is greatly appreciated.
+
+[![Buy Me A Coffee](https://www.buymeacoffee.com/assets/img/custom_images/yellow_img.png)](https://www.buymeacoffee.com/atikas)
 
 	
 ## Good luck with your implementation!
