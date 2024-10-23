@@ -63,6 +63,49 @@ To start the project, follow these steps:
 - The main HTML, CSS, and JavaScript files should be stored together in the root.
 - Separate subfolders should be created for other pages, such as the registration and login forms, to maintain order.
 
+
+### Evaluation Criteria
+
+The project will be evaluated based on the following criteria:
+
+### 1. **Functionality (40%)**
+   - The application correctly implements all required features:
+     - User registration and login functionality.
+     - Proper validation of registration and login forms.
+     - Display of the logged-in user's name on the To-Do page.
+     - Ability to add, edit, and delete tasks with correct interactions with the database.
+     - Filtering and displaying tasks only for the logged-in user.
+   - All API methods (GET, POST, PUT, DELETE) are properly implemented and tested.
+
+### 2. **Code Quality (20%)**
+   - The code is clean, well-structured, and follows best practices.
+   - Meaningful variable and function names are used.
+   - The file structure is organized, and unnecessary duplication of code is avoided.
+   - Proper error handling is implemented.
+
+### 3. **User Interface and Design (15%)**
+   - The application design follows the provided requirements:
+     - White background with borders around elements and forms.
+     - Centered content with consistent element and form widths.
+     - A minimalist but visually appealing design.
+   - Responsiveness of the layout (optional but rewarded if included).
+
+### 4. **Validation, Security, and Robustness (15%)**
+   - Form validations are properly implemented, preventing invalid data entry.
+   - Passwords are masked in both registration and login forms.
+   - Error messages are displayed appropriately (e.g., when the user does not exist).
+   - The program handles edge and corner input values without crashing or throwing errors (e.g., empty inputs, extremely long strings, special characters, invalid dates, etc.).
+
+### 5. **Performance and Efficiency (10%)**
+   - The application performs efficiently with quick response times.
+   - The database is accessed efficiently, and filtering operations are performed correctly.
+
+### 6. **Documentation (5%)**
+   - The project includes clear and detailed documentation, including:
+     - A README file that explains how to set up, run, and use the project.
+     - Comments in the code where necessary to explain complex logic.
+
+
 ## Support
 
 If you found this project helpful and would like to support my work, consider buying me a coffee! Your support is greatly appreciated.
