@@ -39,7 +39,7 @@ To start the project, follow these steps:
 
 ### 4. To-Do App
 - Display the logged-in user's name and last name at the top left corner.
-- Create an "Add" button that opens a form with three fields: `Task Type`, `Content`, and `End Date`.
+- Create an "Add" button that opens a form with three fields: `Task Type`, `Content`, `Done`, `Priority`, and `End Date`.
 - Upon submission, the task data should be saved in the database, along with the user's name.
 - The To-Do app should only display tasks related to the logged-in user by filtering tasks using their name.
 - Implement functionality to edit and delete tasks, with updates being reflected in the database.
@@ -63,23 +63,5 @@ To start the project, follow these steps:
 - The main HTML, CSS, and JavaScript files should be stored together in the root.
 - Separate subfolders should be created for other pages, such as the registration and login forms, to maintain order.
 
-### Example File Structure:
-/project-folder
-  /index.html
-  /main.js
-  /main.css
-  /registration-form
-    /registration.html
-    /registration.js
-    /registration.css
-  /login-form
-    /login.html
-    /login.js
-    /login.css
-  /todo-app
-    /todo.html
-    /todo.js
-    /todo.css
-	
 	
 ## Good luck with your implementation!
