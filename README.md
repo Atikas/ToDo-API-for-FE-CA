@@ -26,16 +26,18 @@ To start the project, follow these steps:
 - Clicking "Login" redirects the user to the login form.
 
 ### 2. Registration Form
-- Create a form with three input fields: `First Name`, `Last Name`, `Password`, and `Email`.
+- Create a form with four input fields: `First Name`, `Last Name`, `Password`, and `Email`.
 - The user's information should be saved to the database upon registration.
-- After successful registration, the user should be redirected to the To-Do app.
-- **Field Validations**: Ensure all fields are validated, and the password should be masked (not visible).
+- After successful registration, the user should be automaticaly redirected to the login page.
+- **Field Validations**: Ensure all fields are required and password should be masked (not visible).
+- The error messages must be on a red background and clearly visible.
 
 ### 3. Login Form
-- Create a form with two input fields: `First Name`, `Last Name`, and a `Password` field with a "Login" button.
+- Create a form with three input fields: `First Name`, `Last Name`, and `Password`
+- Create one button "Login".
 - Check if the user exists in the database.
 - If the user exists, redirect them to the To-Do app. If not, display a red error message: "User does not exist."
-- **Password** should be masked.
+- Password should be masked.
 
 ### 4. To-Do App
 - Display the logged-in user's name and last name at the top left corner.
